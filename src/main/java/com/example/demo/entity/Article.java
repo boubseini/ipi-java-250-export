@@ -14,6 +14,8 @@ public class Article {
 
     @Column
     private String libelle;
+    @Column
+    private String marque;
 
     @Column
     private Double prix;
@@ -38,7 +40,15 @@ public class Article {
         return prix;
     }
 
+    public void setMarque( String marque) {
+        this.marque= marque;
+    }
+    public String getMarque() {
+        return marque;
+    }
+
     public void setPrix(Double prix) {
         this.prix = prix;
     }
 }
+
