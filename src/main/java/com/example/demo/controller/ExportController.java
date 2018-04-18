@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+
 import com.example.demo.dto.ClientDTO;
 import com.example.demo.dto.FactureDTO;
 import com.example.demo.service.ClientService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -55,6 +57,8 @@ public class ExportController {
         exportXLSXService.export(response.getOutputStream(),clients);
     }
 
+  
+
    @GetMapping("factures/{id}/pdf")
     public void facturePDF(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
@@ -62,5 +66,14 @@ public class ExportController {
         FactureDTO facture = factureService.findById(id);
         exportPDFITextService.export(response.getOutputStream(), facture);
     }
+   
+   @GetMapping("/clients/{id}/xlsx")
+   public void clientXLSX(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+       response.setContentType("text/xlsx");
+       response.setHeader("Content-Disposition", "attachment; filename=\"clients " + id + ".xlsx\"");
+       List<FactureDTO> facturesClient = factureService.findAllByIdClient(id);
+       exportXLSXService.exportFacturesClient(response.getOutputStream(), facturesClient);
+   }
+
 
 }

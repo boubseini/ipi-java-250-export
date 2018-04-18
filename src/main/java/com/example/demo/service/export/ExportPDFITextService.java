@@ -19,16 +19,18 @@ public class ExportPDFITextService {
         PdfWriter.getInstance(document, os);
         document.open();
 
-         facture.getClient().getNom();
-        facture.getLigneFactures();
+
         double Total = 0.0;
 
         document.add(new Paragraph(facture.getClient().getNom()+" "+facture.getClient().getPrenom()));
+        document.add( new Paragraph("Facture numéro "+facture.getId()));
         for (LigneFactureDTO ls : facture.getLigneFactures()) {
-            document.add(new Paragraph(" Désignation :"+ls.getDesignation() + "\n" + "  Quantité :  " + ls.getQuantite() + "\n"+  "  Prix : " + ls.getPrixUnitaire()));
+            document.add(new Paragraph(" Désignation :"+ls.getDesignation() + "\n" +
+                                         "  Quantité :  " + ls.getQuantite() + "\n"+  
+            		                        "  Prix : " + ls.getPrixUnitaire() + "€"));
             Total+= ls.getQuantite()*ls.getPrixUnitaire();
         }
-        document.add(new Paragraph("Total : " + Total));
+        document.add(new Paragraph("Total : " + Total +"€"));
         document.close();
     }
 }

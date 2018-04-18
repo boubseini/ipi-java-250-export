@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ClientDTO;
+import com.example.demo.entity.Client;
 import com.example.demo.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,19 @@ public class ClientService {
 
     public List<ClientDTO> findAllClients() {
         return clientRepository.findAll().stream().map(c-> clientMapper.map(c)).collect(toList());
+    }
+
+
+    private ClientDTO toDTO(Client c ) {
+        ClientDTO clientDTO = new ClientDTO();
+        clientDTO.setId(c.getId());
+        return clientDTO;
+    }
+
+    public ClientDTO findById(Long id) {
+        return clientRepository.findById(id)
+                .map(c -> clientMapper.map(c))
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Client inconnu " + id));
     }
 }

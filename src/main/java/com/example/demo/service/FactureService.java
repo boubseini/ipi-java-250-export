@@ -23,22 +23,29 @@ public class FactureService {
     private ClientMapper clientMapper;
 
     public List<FactureDTO> findAllFactures() {
-        return factureRepository.findAll().stream().map(this::toDTO).collect(toList());
+        List<Facture> findAll = factureRepository.findAll();
+		return findAll.stream().map(this::toDTO).collect(toList());
+    }
+    
+    public List<FactureDTO> findAllByIdClient(Long id){
+    	return factureRepository.findAllByClientId(id).stream().map(this::toDTO).collect(toList());
     }
 
-    private FactureDTO toDTO(Facture f) {
+    
+    private FactureDTO toDTO(Facture F) {
         FactureDTO factureDTO = new FactureDTO();
-        factureDTO.setId(f.getId());
-        factureDTO.setClient(clientMapper.map(f.getClient()));
-        factureDTO.setLigneFactures(f.getLigneFactures().stream().map(this::mapLigneFacture).collect(toList()));
+        factureDTO.setId(F.getId());
+        factureDTO.setClient(clientMapper.map(F.getClient()));
+        factureDTO.setLigneFactures(F.getLigneFactures().stream().map(this::mapLigneFacture).collect(toList()));
         return factureDTO;
     }
-
-    private LigneFactureDTO mapLigneFacture(LigneFacture lf) {
+    
+    
+    private LigneFactureDTO mapLigneFacture(LigneFacture LF) {
         LigneFactureDTO ligneFactureDTO = new LigneFactureDTO();
-        ligneFactureDTO.setDesignation(lf.getArticle().getLibelle());
-        ligneFactureDTO.setQuantite(lf.getQuantite());
-        ligneFactureDTO.setPrixUnitaire(lf.getArticle().getPrix());
+        ligneFactureDTO.setDesignation(LF.getArticle().getLibelle());
+        ligneFactureDTO.setQuantite(LF.getQuantite());
+        ligneFactureDTO.setPrixUnitaire(LF.getArticle().getPrix());
         return ligneFactureDTO;
     }
 

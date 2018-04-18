@@ -14,9 +14,9 @@ public class ExportCSVService {
         printWriter.write("Nom;Prenom;Adresse;Age");
         printWriter.write("\n");
         for (ClientDTO client : clients) {
-            printWriter.write(client.getNom());
+            printWriter.write(client.getNom().replace(";", ""));
             printWriter.write(";");
-            printWriter.write(client.getPrenom());
+            printWriter.write(client.getPrenom().replace(";", ""));
             printWriter.write(";");
             printWriter.write(client.getAdresse());
             printWriter.write(";");

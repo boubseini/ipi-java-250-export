@@ -36,6 +36,10 @@ public class InitData {
         Article article3 = newArticle("Carte SD", 21.90,"machin");
         em.persist(article3);
 
+        Client client4 = newClient("Se;ini", "Bou;bacar", "70 rue jean claude vivant 69100",25);
+        em.persist(client4);
+
+
 
         {
             Facture facture = newFacture(client1);
